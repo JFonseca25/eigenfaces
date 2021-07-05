@@ -26,7 +26,7 @@ rng = default_rng()
 def set_threshold(theta: float):
     global threshold
     threshold = theta
-    print(threshold)
+    print("Threshold: ", threshold)
 
 def get_path_to_img(sid: int, img_id: int):
     return faces_dir + "/s" + str(sid) + "/" + str(img_id) + ".pgm"
@@ -56,6 +56,7 @@ def render_image(image: np.ndarray):
 
 # Returns a matrix with the given number of faces and the ids used: (face_matrix, training_set_ids)
 def load_training_set(nr_of_subjects: int):
+    print("Using 8 images from %d subjects." % nr_of_subjects)
     training_set_ids = rng.choice(range(1, 41), size = nr_of_subjects, replace = False)
     face_matrix = np.zeros(shape = (NM, nr_of_subjects * 8), dtype = float)
     k = 0
@@ -68,6 +69,8 @@ def load_training_set(nr_of_subjects: int):
     return face_matrix, training_set_ids
 
 def get_top_N_eigenfaces(N: int, evalues: np.ndarray, efaces: np.ndarray):
+    print("Getting the top %d eigenfaces." % N)
+
     top_indices = list(reversed(evalues.argsort()))
     top_N_eigenfaces = np.zeros((NM, N), dtype = float)
      
@@ -117,7 +120,6 @@ def get_closest_face_class(face_classes: dict, weights_vector: np.ndarray):
 def try_to_recognize_image(face_classes: dict, weights_vector: np.ndarray, subject_id: int, img_id: int):
     k, dist_to_a_face_class = get_closest_face_class(face_classes, weights_vector)
     if dist_to_a_face_class < threshold:
-        print("Image {}-{} is subject {}!".format(subject_id, img_id, k))
         
         if subject_id != k:
             return "FP"
@@ -125,7 +127,6 @@ def try_to_recognize_image(face_classes: dict, weights_vector: np.ndarray, subje
             return "P"
             
     elif dist_to_a_face_class >= threshold:
-        print("Image {}-{} is an unknown subject!".format(subject_id, img_id))
         return "UNK"
 
 def recognition_test(face_classes: dict, training_set_ids: np.ndarray,
