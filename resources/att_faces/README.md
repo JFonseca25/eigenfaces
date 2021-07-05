@@ -1,6 +1,6 @@
 # The Database of Faces from AT&T
 
-I couldn't find the original set, so I used the one I found in [this repo](https://github.com/mohamed-elsayed-mohamed/Face-Recognition) and converted the images to `.png` format.
+I couldn't find the original set, so I used the one I found in [this repo](https://github.com/mohamed-elsayed-mohamed/Face-Recognition). I also merged the "Training" and "Testing" folders found in that repo, since I wanted to use more than one image for testing the system.
 
 ## Description (from [this web page](https://git-disl.github.io/GTDLBench/datasets/att_face_dataset/))
 
